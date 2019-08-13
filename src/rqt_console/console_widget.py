@@ -96,9 +96,10 @@ class ConsoleWidget(QWidget):
         self.setObjectName('ConsoleWidget')
         self.table_view.setModel(proxy_model)
 
-        self._columnwidth = (60, 100, 70, 100, 100, 100, 100)
+        self._columnwidth = (60, 100, 70, 100, 100, 0, 100)
         for idx, width in enumerate(self._columnwidth):
             self.table_view.horizontalHeader().resizeSection(idx, width)
+        self.table_view.hideColumn(MessageDataModel.columns.index("topics") + 1)
         try:
             setSectionResizeMode = self.table_view.horizontalHeader().setSectionResizeMode  # Qt5
         except AttributeError:
@@ -744,6 +745,7 @@ class ConsoleWidget(QWidget):
 
     def _handle_column_resize_clicked(self):
         self.table_view.resizeColumnsToContents()
+        self.table_view.hideColumn(MessageDataModel.columns.index("topics") + 1)
 
     def _delete_selected_rows(self):
         rowlist = []
